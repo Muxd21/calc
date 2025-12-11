@@ -1,0 +1,60 @@
+name: Daily Update - AI Insights, News & Inflation
+
+on:
+  schedule:
+    # Runs daily at 6:00 AM UTC (9:00 AM Saudi Arabia time)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allow manual trigger
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/daily-update.yml'
+      - 'scripts/**'
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests python-dotenv
+        
+    - name: Fetch Inflation Data
+      id: inflation
+      run: python scripts/fetch_inflation.py
+      env:
+        COUNTRY_CODE: ${{ secrets.INFLATION_COUNTRY || 'SAU' }}
+        
+    - name: Fetch News Data
+      id: news
+      run: python scripts/fetch_news.py
+      env:
+        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY || '' }}
+        
+    - name: Generate AI Insights
+      id: ai
+      run: python scripts/generate_insights.py
+      env:
+        OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY || '' }}
+        
+    - name: Combine Data
+      run: python scripts/combine_data.py
+      
+    - name: Commit and Push
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data/latest.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Daily update: $(date +'%Y-%m-%d %H:%M UTC')" && git push)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,228 @@
+<p>Loading your financial insights...</p>
+</div>
+
+<!-- Main App -->
+<div id="main-app" class="hidden">
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <span>Smart Finance</span>
+</div>
+<div class="nav-links">
+    <button class="nav-link active" data-view="dashboard">Dashboard</button>
+    <button class="nav-link" data-view="loans">Loans</button>
+    <button class="nav-link" data-view="insights">AI Insights</button>
+    <button class="nav-link" data-view="profile">Profile</button>
+</div>
+</div>
+</nav>
+
+<!-- Dashboard View -->
+<main id="dashboard-view" class="view active">
+    <div class="container">
+        <header class="page-header">
+            <h1>Financial Dashboard</h1>
+            <p class="subtitle">Real-time insights powered by AI</p>
+            <div class="last-update">
+                Last updated: <span id="last-update-time">Loading...</span>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Current Inflation</div>
+                    <div class="stat-value" id="current-inflation">--%</div>
+                    <div class="stat-change positive" id="inflation-change">Loading...</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path
+                            d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Total Loans</div>
+                    <div class="stat-value" id="total-loans">0</div>
+                    <div class="stat-change" id="loans-detail">No active loans</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path
+                            d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Purchasing Power Loss</div>
+                    <div class="stat-value" id="power-loss">--</div>
+                    <div class="stat-change negative" id="power-loss-detail">Compared to last year</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path
+                            d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Next Payment</div>
+                    <div class="stat-value" id="next-payment">--</div>
+                    <div class="stat-change" id="next-payment-detail">No upcoming payments</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Section -->
+        <section class="news-section">
+            <h2>📰 Latest Economic News</h2>
+            <div id="news-container" class="news-grid">
+                <div class="loading-placeholder">Loading news...</div>
+            </div>
+        </section>
+
+        <!-- AI Insights Section -->
+        <section class="insights-section">
+            <h2>🤖 AI Financial Insights</h2>
+            <div id="ai-insights-container" class="insights-container">
+                <div class="loading-placeholder">Generating AI insights...</div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Loans View -->
+<main id="loans-view" class="view">
+    <div class="container">
+        <header class="page-header">
+            <h1>Your Loans</h1>
+            <button class="btn-primary" id="add-loan-btn">+ Add New Loan</button>
+        </header>
+        <div id="loans-container" class="loans-container">
+            <div class="empty-state">
+                <svg width="64" height="64" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                </svg>
+                <h3>No loans yet</h3>
+                <p>Start by adding your first loan to track its real cost</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- AI Insights View -->
+<main id="insights-view" class="view">
+    <div class="container">
+        <header class="page-header">
+            <h1>AI Insights</h1>
+            <p class="subtitle">Powered by free AI models via OpenRouter</p>
+        </header>
+        <div id="full-insights-container" class="full-insights">
+            <div class="loading-placeholder">Loading detailed insights...</div>
+        </div>
+    </div>
+</main>
+
+<!-- Profile View -->
+<main id="profile-view" class="view">
+    <div class="container">
+        <header class="page-header">
+            <h1>Profile & Settings</h1>
+        </header>
+        <div class="profile-container">
+            <div class="qr-section">
+                <h3>Your QR Code</h3>
+                <p>Scan this code on other devices to access your data</p>
+                <div id="qr-code" class="qr-code-container"></div>
+                <button class="btn-secondary" id="regenerate-qr">Regenerate QR Code</button>
+            </div>
+
+            <div class="settings-section">
+                <h3>Settings</h3>
+                <div class="form-group">
+                    <label>Monthly Salary</label>
+                    <input type="number" id="salary-input" placeholder="Enter your monthly salary">
+                </div>
+                <div class="form-group">
+                    <label>Yearly Raise (%)</label>
+                    <input type="number" id="raise-input" placeholder="Expected yearly raise percentage">
+                </div>
+                <div class="form-group">
+                    <label>Currency</label>
+                    <select id="currency-select">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="SAR">SAR - Saudi Riyal</option>
+                    </select>
+                </div>
+                <button class="btn-primary" id="save-settings">Save Settings</button>
+            </div>
+        </div>
+    </div>
+</main>
+</div>
+</div>
+
+<!-- Add Loan Modal -->
+<div id="loan-modal" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add New Loan</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Loan Type</label>
+                <select id="loan-type">
+                    <option value="car">Car Loan</option>
+                    <option value="rent">Rent</option>
+                    <option value="installment">Installment Plan</option>
+                    <option value="bnpl">Buy Now Pay Later</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Loan Amount</label>
+                <input type="number" id="loan-amount" placeholder="Total loan amount">
+            </div>
+            <div class="form-group">
+                <label>Interest Rate (%)</label>
+                <input type="number" id="loan-interest" placeholder="Annual interest rate">
+            </div>
+            <div class="form-group">
+                <label>Duration (months)</label>
+                <input type="number" id="loan-duration" placeholder="Loan duration in months">
+            </div>
+            <div class="form-group">
+                <label>Monthly Payment</label>
+                <input type="number" id="loan-payment" placeholder="Monthly payment amount">
+            </div>
+            <div class="form-group">
+                <label>% of Income</label>
+                <input type="number" id="loan-percentage" placeholder="Percentage of your income">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary close-modal">Cancel</button>
+            <button class="btn-primary" id="save-loan">Save Loan</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+
+</html>
