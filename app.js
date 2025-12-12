@@ -22,6 +22,9 @@ const state = {
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing Smart Finance App...');
 
+    // Check for imported data from QR code (Magic Link)
+    checkForImport();
+
     // Load user data from localStorage
     loadUserData();
 
@@ -443,22 +446,61 @@ window.deleteLoan = function (id) {
     }
 };
 
-// QR Code
+// QR Code - Magic Link Generator
 function generateQRCode() {
     const qrContainer = document.getElementById('qr-code');
     if (!qrContainer) return;
 
-    const data = JSON.stringify({
+    // Create a "Magic Link" containing the data
+    const data = {
         id: state.userData.id,
-        salary: state.userData.salary
-    });
+        salary: state.userData.salary,
+        currency: state.userData.currency,
+        yearlyRaise: state.userData.yearlyRaise
+    };
 
-    // Use a public API for QR code
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data)}&color=6366f1`;
+    const jsonString = JSON.stringify(data);
+    const encodedData = encodeURIComponent(jsonString);
+
+    // Construct the full URL
+    // We use window.location.origin + window.location.pathname to get the base app URL
+    const magicLink = `${window.location.origin}${window.location.pathname}?import=${encodedData}`;
+
+    // Generate QR code pointing to the Magic Link
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(magicLink)}&color=6366f1`;
 
     qrContainer.innerHTML = `
         <img src="${qrUrl}" alt="QR Code" style="border-radius: 8px; border: 2px solid #eee;">
+        <p style="font-size: 0.8em; margin-top: 10px; color: #666;">امسح الرمز بكاميرا الجوال لنقل بياناتك فوراً</p>
     `;
+}
+
+// Check for Import Data
+function checkForImport() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const importData = urlParams.get('import');
+
+    if (importData) {
+        try {
+            const data = JSON.parse(decodeURIComponent(importData));
+
+            if (data.id && data.salary) {
+                if (confirm('هل تريد استيراد البيانات المالية من الرمز الممسوح؟\n(سيتم استبدال البيانات الحالية)')) {
+                    state.userData = {
+                        ...state.userData, // Keep defaults if missing
+                        ...data
+                    };
+                    saveUserData();
+                    alert('تم استيراد البيانات بنجاح! 🎉');
+
+                    // Clean URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+        } catch (e) {
+            console.error('Error importing data:', e);
+        }
+    }
 }
 
 // Utilities
