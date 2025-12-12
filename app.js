@@ -51,11 +51,9 @@ function loadUserData() {
         // Populate settings inputs
         const salaryInput = document.getElementById('salary-input');
         const raiseInput = document.getElementById('raise-input');
-        const currencySelect = document.getElementById('currency-select');
 
         if (salaryInput) salaryInput.value = state.userData.salary || '';
         if (raiseInput) raiseInput.value = state.userData.yearlyRaise || '';
-        if (currencySelect) currencySelect.value = state.userData.currency || 'SAR';
     } else {
         // Initialize new user
         state.userData = {
@@ -123,7 +121,7 @@ function setupEventListeners() {
         saveSettingsBtn.addEventListener('click', () => {
             state.userData.salary = parseFloat(document.getElementById('salary-input').value) || 0;
             state.userData.yearlyRaise = parseFloat(document.getElementById('raise-input').value) || 0;
-            state.userData.currency = document.getElementById('currency-select').value;
+            state.userData.currency = 'SAR'; // Force SAR
             saveUserData();
             updateDashboard();
             renderInsights(); // Re-render insights with new salary
@@ -241,8 +239,17 @@ function renderInsights() {
     // Calculate weighted average interest if loans exist
     let loanWisdomHTML = '';
     if (state.loans.length > 0) {
-        const totalLoanAmount = state.loans.reduce((sum, loan) => sum + loan.amount, 0);
-        const weightedInterest = state.loans.reduce((sum, loan) => sum + (loan.interest * loan.amount), 0) / totalLoanAmount;
+        const totalLoanAmount = state.loans.reduce((sum, loan) => sum + (parseFloat(loan.amount) || 0), 0);
+
+        let weightedInterest = 0;
+        if (totalLoanAmount > 0) {
+            weightedInterest = state.loans.reduce((sum, loan) => {
+                const amount = parseFloat(loan.amount) || 0;
+                const interest = parseFloat(loan.interest) || 0;
+                return sum + (interest * amount);
+            }, 0) / totalLoanAmount;
+        }
+
         const realInterest = weightedInterest - inflation;
 
         loanWisdomHTML = `
@@ -460,13 +467,13 @@ function generateId() {
 }
 
 function formatCurrency(amount) {
-    const currency = state.userData?.currency || 'SAR';
-    return new Intl.NumberFormat('ar-SA', {
-        style: 'currency',
-        currency: currency,
+    // Use custom symbol ⃁ (U+20C1) as requested
+    const formatter = new Intl.NumberFormat('ar-SA', {
+        style: 'decimal',
         numberingSystem: 'latn', // Force Latin numerals (0-9)
         maximumFractionDigits: 0
-    }).format(amount);
+    });
+    return formatter.format(amount) + ' ⃁';
 }
 
 function getLoanTypeLabel(type) {
