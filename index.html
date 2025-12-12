@@ -50,7 +50,7 @@
                     <div class="nav-links">
                         <button class="nav-link active" data-view="dashboard">الرئيسية</button>
                         <button class="nav-link" data-view="loans">القروض</button>
-                        <button class="nav-link" data-view="insights">الذكاء الاصطناعي</button>
+                        <button class="nav-link" data-view="insights">الملخص المالي</button>
                         <button class="nav-link" data-view="profile">الملف الشخصي</button>
                     </div>
                 </div>
@@ -132,47 +132,29 @@
 
                     <!-- News Section -->
                     <section class="news-section">
-                        <h2>📰 آخر الأخبار الاقتصادية</h2>
-                        <div id="news-container" class="news-grid">
-                            <div class="loading-placeholder">جاري تحميل الأخبار...</div>
+                        <div class="container">
+                            <header class="page-header">
+                                <h1>قروضك</h1>
+                                <button class="btn-primary" id="add-loan-btn">+ إضافة قرض جديد</button>
+                            </header>
+                            <div id="loans-container" class="loans-container">
+                                <div class="empty-state">
+                                    <svg width="64" height="64" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                                    </svg>
+                                    <h3>لا توجد قروض بعد</h3>
+                                    <p>ابدأ بإضافة قرضك الأول لتتبع تكلفته الحقيقية</p>
+                                </div>
+                            </div>
                         </div>
-                    </section>
-
-                    <!-- AI Insights Section -->
-                    <section class="insights-section">
-                        <h2>🤖 رؤى الذكاء الاصطناعي</h2>
-                        <div id="ai-insights-container" class="insights-container">
-                            <div class="loading-placeholder">جاري توليد الرؤى الذكية...</div>
-                        </div>
-                    </section>
-                </div>
-            </main>
-
-            <!-- Loans View -->
-            <main id="loans-view" class="view">
-                <div class="container">
-                    <header class="page-header">
-                        <h1>قروضك</h1>
-                        <button class="btn-primary" id="add-loan-btn">+ إضافة قرض جديد</button>
-                    </header>
-                    <div id="loans-container" class="loans-container">
-                        <div class="empty-state">
-                            <svg width="64" height="64" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                            </svg>
-                            <h3>لا توجد قروض بعد</h3>
-                            <p>ابدأ بإضافة قرضك الأول لتتبع تكلفته الحقيقية</p>
-                        </div>
-                    </div>
-                </div>
             </main>
 
             <!-- AI Insights View -->
             <main id="insights-view" class="view">
                 <div class="container">
                     <header class="page-header">
-                        <h1>رؤى الذكاء الاصطناعي</h1>
+                        <h1>الملخص المالي</h1>
                         <p class="subtitle">مدعوم بنماذج ذكاء اصطناعي مجانية عبر OpenRouter</p>
                     </header>
                     <div id="full-insights-container" class="full-insights">
